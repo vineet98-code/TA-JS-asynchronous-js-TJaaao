@@ -2,11 +2,19 @@
 // https://api.unsplash.com/photos/random
 
 const img = document.querySelector("img");
-const reload = document.querySelector('button');
+const name = document.querySelector("name");
+const workingAt = document.querySelector("p");
+const followers = document.querySelector("followers");
+const Following = document.querySelector("Following");
+const input = document.querySelector("input");
 
 
 
-reload.addEventListener('click', () => {
+
+
+
+input.addEventListener('click', () => {
+    
     let xhr = new XMLHttpRequest();
 
     xhr.open(
@@ -16,6 +24,9 @@ reload.addEventListener('click', () => {
     xhr.onload = function () {
         let imageData = JSON.parse(xhr.response);
         img.src = imageData.urls.small;
+        name.innerText = imageData.name;
+        following.innerText = `Following: ${imageData.following}`;
+        followers.innerText = `Followers: ${imageData.followers}`;
         
     };
     xhr.onerror = function () {
