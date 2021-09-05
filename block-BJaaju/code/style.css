@@ -1,0 +1,23 @@
+body{
+    text-align: center;
+    background-color: #F5D8AB;
+}
+li{
+    list-style: none;
+}
+header{
+    margin: 1rem 0;
+    font-weight: 900;
+    font-size: 24px;
+}
+.flex{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.flex-30{
+    flex: 0 1 30%;
+}
+.images li img{
+   width: 100%;
+}
