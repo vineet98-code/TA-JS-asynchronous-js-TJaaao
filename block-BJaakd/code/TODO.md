@@ -1,19 +1,31 @@
 1. Create a promise. Have it resolve with a value of `Promise Resolved!` in resolve after a delay of 1000ms, using `setTimeout`. Print the contents of the promise after it has been resolved by passing `console.log` to `.then`
 
 ```js
-// Your code
+let fulfilled = new Promise((resolve, reject) => {
+    setTimeout(() => resolve('Promise Resolved!'), 1000)
+}).then((value) => console.log(value));
+
 ```
 
 2. Create another promise. Now have it reject with a value of `Rejected Promise!` without using `setTimeout`. Print the contents of the promise after it has been rejected by passing console.log to `.catch`
 
 ```js
-// Your code
+
+let rejected = new Promise((resolve, reject) => {
+     reject('Rejected Promise!')
+}).catch((error) => console.log(error));
+
 ```
 
-3. Create another promise. Now have it reject with a value of `Rejected Promise!` without using `setTimeout`. Print the contents of the promise after it has been rejected by passing console.log to `.catch` and also use `.finally` to log message `Promise Settled!`.
+3. Create another promise. Now have it reject with a value of `Rejected Promise!` with using `setTimeout`. Print the contents of the promise after it has been rejected by passing console.log to `.catch` and also use `.finally` to log message `Promise Settled!`.
 
 ```js
-// Your code
+let rejected = new Promise((resolve, reject) => {
+    setTimeout(() => reject('Rejected Promise!'), 2000)
+}).catch((error) => console.log(error))
+  .finally(() => console.log('Promise Settled!'));
+
+
 ```
 
 4. What will be the output of the code below.
@@ -28,12 +40,21 @@ setTimeout(() => console.log('B'), 0); // callback queue
 Promise.resolve().then(() => console.log('C'));
 
 console.log('D');
+
+// A, D, C, B
+   
 ```
 
 5. Write a function named `wait` that accepts `time` in ms returns a promise. The promise gets resolved after given time.
 
 ```js
-// Your code
+
+function wait(time){
+    return new Promise((resovle, reject) => {
+     setTimeout(() => resovle(100), 2000);
+    }).then((value) => console.log(value));
+}
+wait(1000);
 ```
 
 6. Do the following:
@@ -46,7 +67,13 @@ console.log('D');
 - Catch the error using `.catch`
 
 ```js
-// Your code
+
+let fulfilled = new Promise((resolve, reject) => {
+    resolve(21)
+}).then((value) => console.log( value + 10)).then((value) => console.log( value + 100))
+  .then((value) => console.log(value > 100))
+  .catch((error) => console.log(error));
+
 ```
 
 7. Do the following:
