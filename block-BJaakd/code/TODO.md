@@ -41,7 +41,10 @@ Promise.resolve().then(() => console.log('C'));
 
 console.log('D');
 
-// A, D, C, B
+// A 
+// D 
+// C 
+// B
    
 ```
 
@@ -51,10 +54,10 @@ console.log('D');
 
 function wait(time){
     return new Promise((resovle, reject) => {
-     setTimeout(() => resovle(100), 2000);
-    }).then((value) => console.log(value));
+     setTimeout(() => resovle('Promised Resolved'), time);
+    })
 }
-wait(1000);
+wait(1000).then((value) => console.log(value));
 ```
 
 6. Do the following:
@@ -70,9 +73,22 @@ wait(1000);
 
 let fulfilled = new Promise((resolve, reject) => {
     resolve(21)
-}).then((value) => console.log( value + 10)).then((value) => console.log( value + 100))
-  .then((value) => console.log(value > 100))
-  .catch((error) => console.log(error));
+})
+  .then((value) => {
+      console.log(value);
+      return value + 10;
+  })  
+  .then((value) => {
+      console.log(value);
+      return value + 100;
+  })  
+  
+  .then((value) => {
+     console.log(value);
+     if(value > 100){
+         throw new Error('Something went wrong');
+     }
+  }).catch((error) => console.log(error));
 
 ```
 
@@ -86,6 +102,28 @@ let fulfilled = new Promise((resolve, reject) => {
 
 ```js
 // Your code
+// If you have an array or an object then we can use reduce
+
+let fulfilled = new Promise((resolve, reject) => {
+    resolve(['A'])
+})
+  .then((value) => {
+      console.log(value);
+      return value.concat('B');
+  })  
+  .then((value) => {
+      console.log(value);
+
+      return value.reduce((acc,cv,index) => {
+        acc[index] = cv;
+        return acc;
+      }, {});
+  })  
+  
+  .then((value) => {
+     console.log(value);
+     
+  });
 ```
 
 8. Do the following:
@@ -97,6 +135,26 @@ let fulfilled = new Promise((resolve, reject) => {
 
 ```js
 // Your code
+
+let first = new Promise((resolve, reject) => {
+    resolve(1)
+});
+first
+  .then((value) => {
+      console.log(value);
+      return 2;
+  })  
+  .then((value) => {
+      console.log(value);
+      return 3;
+  })  
+  .then((value) => {
+      console.log(value);
+      return 4;
+  })  
+
+  
+  
 ```
 
 9. Do the following:
@@ -108,9 +166,30 @@ let fulfilled = new Promise((resolve, reject) => {
 
 ```js
 // Your code
+// Not  useful
+let first = new Promise((resolve, reject) => {
+    resolve(1)
+});
+first
+  .then((value) => {
+      console.log(value);
+      return 2;
+  });
+  first  
+  .then((value) => {
+      console.log(value);
+      return 3;
+  });
+  first  
+  .then((value) => {
+      console.log(value);
+      return 4;
+  }) 
+
 ```
 
 10. Try to understand the difference between the problem 8 and 9. Write your observation.
+<!--  In 9 Problem, Multiple handler on the same promise. one promise and multiple handle and In 8, one handler return another promise again handler return another promise. so thos known as chaining -->
 
 11. Do the following
 
@@ -121,4 +200,21 @@ let fulfilled = new Promise((resolve, reject) => {
 
 ```js
 // Your code
+let user = new Promise((resolve, reject) => {
+    resolve('John')
+})
+  .then((value) => {
+      return new Promise((resolve, reject) => {
+          resolve('Arya');
+      })
+  })  
+.then((value) => {
+  console.log(value);
+
+  return new Promise((resolve) => {
+       setTimeout(() => resolve('Bran'),2000)
+    })
+}).then(console.log);
+   
+  
 ```
