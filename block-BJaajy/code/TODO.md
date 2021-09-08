@@ -2,14 +2,13 @@
 
 ```js
 
-const five = setTimeout(() => Promise.resolve(5), 1000);
-const hello = setTimeout(() => Promise.resolve('hello'), 2000);
-const superHuman = setTimeout(() => Promise.resolve('superHuman'), 3000);
-const error = setTimeout(() => Promise.reject('Error'), 4000);
+let times = [1,2,3,4];
+let timesPromise = times.map((second) => new Promise((res) => {
+         setTimeout(() => res(Math.random()), second * 1000);
+         })
+);
 
-let all = Promise.all([five, hello, superHuman])
-    .then((res) => console.log(res))
-    .catch((rej) => console.error(error));
+Promise.all((timesPromise).then(console.log);
  
 
 ```
@@ -26,11 +25,14 @@ const usernames = [
     'vineet',
     
   ];
-  usernames.forEach(user => {
-     fetch(`https://api.github.com/users/${user}`)
+  let userPromise = usernames.map(user => {
+     return fetch(`https://api.github.com/users/${user}`)
      .then((res) => res.json())
-     .then((info) => console.log(info.followers))
   });
+
+  Promise.all(userPromise).then((user) => {
+    users.forEach((user) => console.log(user.follower))
+  })
 ```
 
 - Use `Promise.race` to see which API resolves faster from the given list of URLs. Log the object you get from the promise that is resolved faster.
@@ -65,8 +67,11 @@ const three = new Promise((resolve, reject) =>
 );
 
 let allSettled = Promise.allSettled([one, two, three])
-           .then((res) => console.log(res))
-             .catch((rej) => console.error(error));
+           .then(console.log);
+let all = Promise.all([one, two, three])
+           .then(console.log);
+          //  promise.all work whether the promise is rsolved or not, it will give the list of it.
+          //  promise.allSettled will resolve all the promise whther it is resolved or rejected. 
 ```
 
 - What will be the output of the following code snippet? How much time will it take for the promise to resolve?
