@@ -1,15 +1,26 @@
-let url = 'https://api.spaceflightnewsapi.net/v3/articles?_limit=30/hghhs';
-
-let data = fetch(url).then((res) => {
-           if(!res.ok){
-              throw new Error(`Error happened: ${res.status}`);
-           }
-           return res.json();
-        });
+let url = 'https://api.spaceflightnewsapi.net/v3/articles?_limit=30';
 
 let display = document.querySelector('.display');
 
 let source = document.querySelector('.source');
+let isLoading = false;
+
+
+    var data = fetch(url).then((res) => {
+               if(!res.ok){
+                  throw new Error(`Error happened: ${res.status}`);
+               }
+               return res.json();
+            });
+
+
+
+function handleSpinner(){
+    if(isLoading){
+        display.innerHTML = `<div class="donut"></div>`
+    }
+}
+
 
 function handleChange(event) {
   console.log(event);
@@ -24,11 +35,17 @@ function handleChange(event) {
     })
   );
 }
+
 source.addEventListener('change', handleChange);
 
-data.then((userData) => userData.forEach((data) => createUI(data))).catch((error) => {
-    display.innerText = error;
-});
+function init(){
+    isLoading = true;
+    handleSpinner();
+    data.then((userData) => userData.forEach((data) => createUI(data))).catch((error) => {
+        display.innerText = error;
+    });
+}
+init();
 
 function createUI(arg) {
   console.log(arg);
